@@ -3502,6 +3502,17 @@ export function getRelatedProducts(product: Product, limit = 8): Product[] {
     .slice(0, limit);
 }
 
+export function getSameCategoryProducts(product: Product, limit = 4): Product[] {
+  const sameGenderAndCategory = products.filter(
+    (p) => p.id !== product.id && p.productCategory === product.productCategory && p.category === product.category
+  );
+  if (sameGenderAndCategory.length >= limit) return sameGenderAndCategory.slice(0, limit);
+  const sameCategoryOnly = products.filter(
+    (p) => p.id !== product.id && p.productCategory === product.productCategory
+  );
+  return sameCategoryOnly.slice(0, limit);
+}
+
 export function getProductsBySeller(sellerSlug: string): Product[] {
   const seller = getSeller(sellerSlug);
   if (!seller) return [];

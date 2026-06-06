@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { products, getProduct, getRelatedProducts } from "@/data/products";
+import { products, getProduct, getRelatedProducts, getSameCategoryProducts } from "@/data/products";
 import { ImageGallery } from "@/components/image-gallery";
 import { ProductInfo } from "@/components/product-info";
 import { ProductDetailsAccordion } from "@/components/product-details-accordion";
+import { AlsoBoughtSection } from "@/components/also-bought-section";
 import { RelatedProducts } from "@/components/related-products";
 import { RecentlyViewedSection } from "./recently-viewed-section";
 
@@ -38,6 +39,7 @@ export default async function ProductPage({ params }: PageProps) {
   }
 
   const related = getRelatedProducts(product);
+  const alsoBought = getSameCategoryProducts(product);
 
   return (
     <main className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-10">
@@ -56,6 +58,9 @@ export default async function ProductPage({ params }: PageProps) {
       <div className="mt-12 max-w-2xl">
         <ProductDetailsAccordion product={product} />
       </div>
+
+      {/* Also bought — same product category */}
+      <AlsoBoughtSection products={alsoBought} />
 
       {/* Related products */}
       <RelatedProducts products={related} />
